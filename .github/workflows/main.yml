@@ -1,11 +1,19 @@
 name: CI
+
 on: [push, pull_request]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Install modules
-      run: npm install
-    - name: Run ESLint
-      run: ./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx
+      - uses: actions/checkout@v2
+
+      - name: Force GitHub HTTPS
+        run: git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: ./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx
